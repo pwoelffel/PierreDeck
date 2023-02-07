@@ -1,7 +1,7 @@
 
 # PierreDeck
 
-Recreation of the Elgato Streamdeck
+Reproduction d'un StreamDeck d'Elgato
 
 ## Montage
 
