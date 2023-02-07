@@ -5,7 +5,7 @@ Recreation of the Elgato Streamdeck
 
 ## Montage
 
-![/images/schema.png](Schema d'assemblage)
+![Schéma d'assemblage](/images/schema.png)
 
 ---
 **⚠️ Le projet n'est pas à jour avec les dernières versions de la librairie `simpleobsws` et du plugin `obs-websocket` ⚠️**
