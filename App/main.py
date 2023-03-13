@@ -5,6 +5,8 @@ from qasync import QEventLoop
 from PySide6 import QtWidgets, QtCore
 from Widgets.ConfigLoader import ConfigLoader
 from Widgets.OBSConnect import OBSConnect
+from Widgets.ButtonMatrix import ButtonMatrix
+from Widgets.PageChanger import PageChanger
 import asyncio
 
 
@@ -19,6 +21,8 @@ class PierreDeckWindow(QtWidgets.QMainWindow):
 
         self.configLoader = ConfigLoader(self.centralWidget)
         self.obsConnect = OBSConnect(self.centralWidget)
+        self.buttonMatrix = ButtonMatrix(self.centralWidget)
+        self.pageChanger = PageChanger(self.centralWidget)
 
         self.centralWidget.layout = QtWidgets.QGridLayout(self.centralWidget)
         self.centralWidget.layout.addWidget(
@@ -33,6 +37,8 @@ class PierreDeckWindow(QtWidgets.QMainWindow):
             1,
             QtCore.Qt.AlignmentFlag.AlignTop | QtCore.Qt.AlignLeft,
         )
+        self.centralWidget.layout.addWidget(self.pageChanger, 1, 0, 1, 4)
+        self.centralWidget.layout.addWidget(self.buttonMatrix, 2, 0, 4, 4)
 
         self.resize(600, 400)
 
@@ -40,7 +46,7 @@ class PierreDeckWindow(QtWidgets.QMainWindow):
 
 
 def main():
-    app = QtWidgets.QApplication(["PierreDeck"])
+    app = QtWidgets.QApplication(["App"])
     loop = QEventLoop(app)
     asyncio.set_event_loop(loop)
 

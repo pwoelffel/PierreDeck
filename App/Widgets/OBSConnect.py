@@ -19,7 +19,7 @@ class OBSConnect(QtWidgets.QWidget):
         self.connected = False
         self.obsWebSocket = WebSocketClient(password="")
 
-        self.setMinimumSize(50, 50)
+        self.button.setMinimumSize(55, 55)
 
     @asyncSlot()
     async def connect(self):
