@@ -14,8 +14,6 @@ class PierreDeckWindow(QtWidgets.QMainWindow):
     def __init__(self, loop=None):
         super().__init__()
 
-        self.menuBar().addMenu("File")
-
         self.centralWidget = QtWidgets.QWidget()
         self.setCentralWidget(self.centralWidget)
 
