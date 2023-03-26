@@ -1,11 +1,12 @@
 from PySide6 import QtWidgets, QtCore, QtGui
-from simpleobsws import WebSocketClient
+from simpleobsws import WebSocketClient, Request
 from qasync import asyncSlot
 
 
 class OBSConnect(QtWidgets.QWidget):
     def __init__(self, parent):
-        super().__init__(parent)
+        super().__init__(parent.centralWidget)
+        self.parent = parent
 
         self.layout = QtWidgets.QStackedLayout(self)
 
@@ -20,6 +21,8 @@ class OBSConnect(QtWidgets.QWidget):
         self.obsWebSocket = WebSocketClient(password="")
 
         self.button.setMinimumSize(55, 55)
+
+        self.connect()
 
     @asyncSlot()
     async def connect(self):
@@ -40,3 +43,9 @@ class OBSConnect(QtWidgets.QWidget):
             self.button.setIcon(
                 QtGui.QIcon("App/assets/icons/obs_logo_not_connected.png")
             )
+
+    async def callObs(self, route, args):
+        if not self.connected:
+            return
+
+        await self.obsWebSocket.call(Request(route, args))

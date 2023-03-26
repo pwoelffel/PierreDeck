@@ -7,6 +7,7 @@ from Widgets.ConfigLoader import ConfigLoader
 from Widgets.OBSConnect import OBSConnect
 from Widgets.ButtonMatrix import ButtonMatrix
 from Widgets.PageChanger import PageChanger
+from Widgets.SerialReader import SerialReader
 import asyncio
 
 
@@ -17,10 +18,11 @@ class PierreDeckWindow(QtWidgets.QMainWindow):
         self.centralWidget = QtWidgets.QWidget()
         self.setCentralWidget(self.centralWidget)
 
-        self.configLoader = ConfigLoader(self.centralWidget)
-        self.obsConnect = OBSConnect(self.centralWidget)
-        self.buttonMatrix = ButtonMatrix(self.centralWidget)
-        self.pageChanger = PageChanger(self.centralWidget)
+        self.obsConnect = OBSConnect(self)
+        self.configLoader = ConfigLoader(self)
+        self.serialReader = SerialReader(self)
+        self.buttonMatrix = ButtonMatrix(self)
+        self.pageChanger = PageChanger(self)
 
         self.centralWidget.layout = QtWidgets.QGridLayout(self.centralWidget)
         self.centralWidget.layout.addWidget(
@@ -33,14 +35,36 @@ class PierreDeckWindow(QtWidgets.QMainWindow):
             self.configLoader,
             0,
             1,
-            QtCore.Qt.AlignmentFlag.AlignTop | QtCore.Qt.AlignLeft,
+            QtCore.Qt.AlignmentFlag.AlignTop | QtCore.Qt.AlignmentFlag.AlignLeft,
         )
+
+        self.centralWidget.layout.addWidget(
+            self.serialReader,
+            0,
+            2,
+            1,
+            2,
+            QtCore.Qt.AlignmentFlag.AlignCenter | QtCore.Qt.AlignmentFlag.AlignTop,
+        )
+
         self.centralWidget.layout.addWidget(self.pageChanger, 1, 0, 1, 4)
         self.centralWidget.layout.addWidget(self.buttonMatrix, 2, 0, 4, 4)
 
-        self.resize(600, 400)
+        self.resize(500, 400)
 
         self.loop = loop or asyncio.get_event_loop()
+
+    def getPage(self):
+        return self.pageChanger.getPage()
+
+    def setButtons(self, config):
+        self.buttonMatrix.setButtons(config)
+
+    """def execFunction(self, function):
+        exec(function)"""
+
+    def execObs(self, route, args):
+        self.loop.create_task(self.obsConnect.callObs(route, args))
 
 
 def main():
