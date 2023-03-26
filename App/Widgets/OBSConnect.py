@@ -26,6 +26,7 @@ class OBSConnect(QtWidgets.QWidget):
 
     @asyncSlot()
     async def connect(self):
+        self.button.setIcon(QtGui.QIcon("App/assets/icons/obs_logo_loading.png"))
         try:
             await self.obsWebSocket.connect()
         except OSError:
